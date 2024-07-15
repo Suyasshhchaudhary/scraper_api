@@ -16,8 +16,5 @@ COPY . .
 # Expose port 3000 to the host
 EXPOSE 3000
 
-# Entrypoint prepares the database.
-ENTRYPOINT ["/app/bin/docker-entrypoint"]
-
 # Start the main process
 CMD ["bundle", "exec", "./bin/rails", "server", "-b", "0.0.0.0"]
