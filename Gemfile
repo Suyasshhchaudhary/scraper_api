@@ -49,5 +49,4 @@ group :development do
   gem "kamal"
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 end
-
-gem 'selenium-webdriver'
+gem 'webdrivers', '~> 5.3', '>= 5.3.1'

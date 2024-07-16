@@ -1,5 +1,5 @@
 require 'selenium-webdriver'
-
+require 'webdrivers'
 class Scraper
 
   BASE_URL = 'https://www.ycombinator.com'
@@ -105,9 +105,9 @@ class Scraper
 
   def driver
     return @driver if @driver
-    options = Selenium::WebDriver::Chrome::Options.new
+    options = Selenium::WebDriver::Firefox::Options.new
     options.add_argument('--headless')
-    @driver = Selenium::WebDriver.for :chrome, options: options
+    @driver = Selenium::WebDriver.for :firefox, options: options
     @driver
   end
 end

@@ -1,6 +1,22 @@
 # Use the official Ruby image
 FROM ruby:3.1.1
 
+ENV GECKODRIVER_VERSION='v0.34.0'
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y \
+        firefox-esr \
+        curl \
+        unzip \
+        xvfb \
+        libxi6 \
+        libgconf-2-4
+
+# Install Geckodriver
+RUN wget -q "https://github.com/mozilla/geckodriver/releases/download/${GECKODRIVER_VERSION}/geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz" && \
+    tar -xzf "geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz" -C /usr/local/bin && \
+    rm "geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz"
+
 # Set the working directory
 WORKDIR /app
 
