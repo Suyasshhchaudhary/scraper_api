@@ -67,7 +67,7 @@ class Scraper
 
   def scroll_to_bottom
     driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-    sleep 1
+    sleep 2
   end
 
   def load_desire_content
