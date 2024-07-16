@@ -29,7 +29,6 @@ class Scraper
   def scrape
     begin
       load_page
-      sleep 2
       load_desire_content
       get_companies_details
     ensure
@@ -55,7 +54,7 @@ class Scraper
     let founders = Array.from(document.querySelectorAll('div.leading-snug')).map(function(f){let name = f.querySelector('div.font-bold').innerText; let linkedIn_node = f.querySelector('a.bg-image-linkedin'); let linkedIn_profile = ''; if(linkedIn_node !== null){linkedIn_profile =  linkedIn_node.getAttribute('href');} return {name: name, linkedIn_profile: linkedIn_profile}; })
     return {website: website, founders: founders}
     """
-
+    Rails.logger.info("=====================#{driver.execute_script('return document.body.scrollHeight')}, #{driver.execute_script("return Array.from(document.querySelectorAll('a._company_86jzd_338')).length")}" )
     companies_data = driver.execute_script(first_page_code)
     companies_data.each do|company_data|
       company_url = BASE_URL + company_data.delete('url')
@@ -67,18 +66,17 @@ class Scraper
 
   def scroll_to_bottom
     driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-    sleep 2
+    sleep 5
   end
 
   def load_desire_content
     return if @number_of_records <= 40
-    scroll_count = 1
     last_height = driver.execute_script('return document.body.scrollHeight')
     loop do
       scroll_to_bottom
-      scroll_count +=1
       new_height = driver.execute_script('return document.body.scrollHeight')
-      break if new_height == last_height || scroll_count * PER_PAGE >= @number_of_records
+      current_records = driver.execute_script("return Array.from(document.querySelectorAll('a._company_86jzd_338')).length")
+      break if new_height == last_height || current_records.to_i >= @number_of_records
       last_height = new_height
     end
   end
