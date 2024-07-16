@@ -33,7 +33,8 @@ class Scraper
       load_desire_content
       get_companies_details
     ensure
-      driver.close
+      driver.quit
+      @driver = nil
     end
   end
 
